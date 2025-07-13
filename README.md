@@ -55,6 +55,6 @@
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/cyberscan.git
-cd cyberscan
+git clone https://github.com/Prateek-glitch/terminal-titans
+cd terminal-titans
 
