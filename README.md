@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/your-username/cyberscan/main/public/assets/logo.png" alt="CyberScan Logo" width="120" />
+  <img src="https://github.com/Prateek-glitch/terminal-titans/blob/main/cyberscan-bg.png" alt="CyberScan Logo" width="120" />
   <h1>CyberScan</h1>
   <p><strong>AI-powered Vulnerability Scanner Dashboard</strong></p>
   <p>Modern full-stack tool for automated pentesting, LLM analysis, and beautiful reporting</p>
