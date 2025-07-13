@@ -112,6 +112,360 @@ body {
   }
 }
 
+
+/* Space-Themed Pentesting App Styles */
+
+/* Root variables for consistent theming */
+:root {
+  --space-dark: #0a0a0f;
+  --earth-dark: #1a1a2e;
+  --space-blue: #16213e;
+  --glow-blue: #00d4ff;
+  --light-blue: #4fc3f7;
+  --accent-blue: #29b6f6;
+  --text-primary: #ffffff;
+  --text-secondary: #b0bec5;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(0, 212, 255, 0.2);
+  --success-green: #4caf50;
+  --warning-orange: #ff9800;
+  --error-red: #f44336;
+}
+
+/* Main background with space theme */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(
+    ellipse at center,
+    var(--space-blue) 0%,
+    var(--earth-dark) 40%,
+    var(--space-dark) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Add subtle animated stars */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(0, 212, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(0, 212, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.4), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: sparkle 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glassmorphic container styling */
+.glassmorphic-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 212, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.glassmorphic-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 212, 255, 0.03) 0%,
+    transparent 70%
+  );
+  animation: rotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.glassmorphic-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 212, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+/* Input styling */
+.space-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: var(--text-primary) !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.space-input:focus {
+  outline: none !important;
+  border-color: var(--glow-blue) !important;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.space-input::placeholder {
+  color: var(--text-secondary) !important;
+}
+
+/* Button styling */
+.space-button {
+  background: linear-gradient(135deg, var(--accent-blue), var(--light-blue)) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.space-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.space-button:hover::before {
+  left: 100%;
+}
+
+.space-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4) !important;
+}
+
+.space-button:disabled {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-secondary) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Checkbox styling */
+.space-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--glow-blue);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.space-checkbox:checked {
+  background: var(--glow-blue);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
+.space-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* Label styling */
+.space-label {
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+}
+
+.space-label:hover {
+  color: var(--light-blue) !important;
+}
+
+/* Heading styling */
+.space-heading {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  margin-bottom: 16px !important;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3) !important;
+}
+
+.space-heading-large {
+  font-size: 28px !important;
+  background: linear-gradient(135deg, var(--text-primary), var(--light-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.space-heading-medium {
+  font-size: 24px !important;
+}
+
+.space-heading-small {
+  font-size: 20px !important;
+}
+
+/* Card grid styling */
+.space-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Scan output styling */
+.space-output {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(0, 212, 255, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  font-family: 'Fira Code', monospace !important;
+  font-size: 14px !important;
+  color: var(--text-primary) !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.space-output::-webkit-scrollbar {
+  width: 8px;
+}
+
+.space-output::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.space-output::-webkit-scrollbar-thumb {
+  background: var(--glow-blue);
+  border-radius: 4px;
+}
+
+.space-output::-webkit-scrollbar-thumb:hover {
+  background: var(--light-blue);
+}
+
+/* Loading animation */
+.space-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--glow-blue);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success/Error states */
+.space-success {
+  color: var(--success-green) !important;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.5) !important;
+}
+
+.space-error {
+  color: var(--error-red) !important;
+  text-shadow: 0 0 10px rgba(244, 67, 54, 0.5) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .space-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .glassmorphic-container {
+    padding: 16px !important;
+  }
+  
+  .space-heading-large {
+    font-size: 24px !important;
+  }
+  
+  .space-heading-medium {
+    font-size: 20px !important;
+  }
+}
+
+/* Utility classes */
+.space-text-primary {
+  color: var(--text-primary) !important;
+}
+
+.space-text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.space-glow {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4) !important;
+}
+
+.space-border {
+  border: 1px solid var(--glass-border) !important;
+}
+
+.space-bg-glass {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+
+
 @layer base {
   * {
     @apply border-border;

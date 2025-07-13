@@ -37,6 +37,16 @@ async function resolveTarget(target) {
   }
 }
 
+// Extract domain from URL
+function extractDomain(target) {
+  try {
+    const url = new URL(target)
+    return url.hostname
+  } catch (error) {
+    throw new Error(`Failed to extract domain from URL: ${error.message}`)
+  }
+}
+
 // Validate target URL
 function validateTarget(target) {
   try {
@@ -91,6 +101,25 @@ async function execWithSudo(command) {
     if (error.message.includes('sudo: a password is required')) {
       throw new Error('Sudo access not properly configured')
     }
+    throw error
+  }
+}
+
+// Execute command without sudo
+async function execWithoutSudo(command) {
+  try {
+    const { stdout, stderr } = await execPromise(command, {
+      timeout: 600000,
+      maxBuffer: 1024 * 1024 * 10
+    })
+    
+    if (stderr) {
+      console.error(`[${CURRENT_TIMESTAMP}] Command stderr:`, stderr)
+    }
+    
+    return stdout || stderr
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] Command execution error:`, error)
     throw error
   }
 }
@@ -178,6 +207,148 @@ async function runNucleiScan(targetUrl) {
   }
 }
 
+// Run Amass scan
+async function runAmassScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `amass enum -passive -d ${domain} -timeout 10`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No subdomains found by Amass"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] Amass scan error:`, error)
+    throw new Error(`Amass scan failed: ${error.message}`)
+  }
+}
+
+// Run httpx scan
+async function runHttpxScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `echo ${domain} | httpx -title -tech-detect -status-code -content-length -timeout 10`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No HTTP information found by httpx"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] httpx scan error:`, error)
+    throw new Error(`httpx scan failed: ${error.message}`)
+  }
+}
+
+// Run Subfinder scan
+async function runSubfinderScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `subfinder -d ${domain} -silent -timeout 10`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No subdomains found by Subfinder"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] Subfinder scan error:`, error)
+    throw new Error(`Subfinder scan failed: ${error.message}`)
+  }
+}
+
+// Run dnsx scan
+async function runDnsxScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `echo ${domain} | dnsx -resp -a -aaaa -cname -mx -ns -txt -silent`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No DNS information found by dnsx"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] dnsx scan error:`, error)
+    throw new Error(`dnsx scan failed: ${error.message}`)
+  }
+}
+
+// Run naabu scan
+async function runNaabuScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `naabu -host ${domain} -top-ports 1000 -silent -timeout 10000`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No open ports found by naabu"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] naabu scan error:`, error)
+    throw new Error(`naabu scan failed: ${error.message}`)
+  }
+}
+
+// Run Wappalyzer scan
+async function runWappalyzerScan(targetUrl) {
+  try {
+    const cmd = `wappalyzer ${targetUrl}`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No technology stack detected by Wappalyzer"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] Wappalyzer scan error:`, error)
+    throw new Error(`Wappalyzer scan failed: ${error.message}`)
+  }
+}
+
+// Run testssl.sh scan
+async function runTestsslScan(targetUrl) {
+  try {
+    const domain = extractDomain(targetUrl)
+    const cmd = `testssl.sh --fast --parallel ${domain}:443`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No SSL/TLS information found by testssl.sh"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] testssl.sh scan error:`, error)
+    throw new Error(`testssl.sh scan failed: ${error.message}`)
+  }
+}
+
+// Run Feroxbuster scan
+async function runFeroxbusterScan(targetUrl) {
+  try {
+    const cmd = `feroxbuster -u ${targetUrl} -t 10 -d 2 -w /usr/share/wordlists/dirb/common.txt --silent`
+    const output = await execWithoutSudo(cmd)
+    
+    if (!output) {
+      return "No directories found by Feroxbuster"
+    }
+    
+    return xss(output)
+  } catch (error) {
+    console.error(`[${CURRENT_TIMESTAMP}] Feroxbuster scan error:`, error)
+    throw new Error(`Feroxbuster scan failed: ${error.message}`)
+  }
+}
+
 // Route to run multiple scans
 router.post("/run-scans", scanLimiter, async (req, res) => {
   const { targetUrl, selectedTools } = req.body
@@ -217,6 +388,30 @@ router.post("/run-scans", scanLimiter, async (req, res) => {
             break
           case "nuclei":
             toolOutput = await runNucleiScan(targetUrl)
+            break
+          case "amass":
+            toolOutput = await runAmassScan(targetUrl)
+            break
+          case "httpx":
+            toolOutput = await runHttpxScan(targetUrl)
+            break
+          case "subfinder":
+            toolOutput = await runSubfinderScan(targetUrl)
+            break
+          case "dnsx":
+            toolOutput = await runDnsxScan(targetUrl)
+            break
+          case "naabu":
+            toolOutput = await runNaabuScan(targetUrl)
+            break
+          case "wappalyzer":
+            toolOutput = await runWappalyzerScan(targetUrl)
+            break
+          case "testssl":
+            toolOutput = await runTestsslScan(targetUrl)
+            break
+          case "feroxbuster":
+            toolOutput = await runFeroxbusterScan(targetUrl)
             break
           default:
             throw new Error(`Unknown tool selected: ${tool}`)
@@ -323,13 +518,11 @@ router.get("/history", async (req, res) => {
   }
 })
 
-// Add these new routes after your existing routes but before the export
-
 // Route to get dashboard summary
 router.get("/dashboard-summary", async (req, res) => {
   try {
     const history = await getScanHistory()
-    const recentScans = history.slice(0, 5) // Get 5 most recent scans
+    const recentScans = history.slice(0, 5)
 
     const summary = {
       statistics: {
@@ -367,7 +560,6 @@ router.get("/patch-recommendations/:scanId", async (req, res) => {
 
     const insights = JSON.parse(scan.llm_insights)
     
-    // Generate patch recommendations using Gemini
     const patchRecommendations = await generateGeminiInsights(
       JSON.stringify({
         type: "patch_recommendations",
@@ -393,7 +585,7 @@ router.get("/patch-recommendations/:scanId", async (req, res) => {
   }
 })
 
-// Helper functions for the new routes
+// Helper functions
 function countVulnerabilitiesByRisk(history) {
   const counts = {
     Critical: 0,
@@ -506,7 +698,7 @@ function calculateEffort(recommendations) {
 
   return {
     totalPatchCount: patches.length,
-    estimatedHours: totalEffort * 2, // Rough estimate of hours
+    estimatedHours: totalEffort * 2,
     recommendedTeamSize: totalEffort > 10 ? 3 : totalEffort > 5 ? 2 : 1,
     complexity: totalEffort > 15 ? 'High' : totalEffort > 8 ? 'Medium' : 'Low'
   }
