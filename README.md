@@ -44,7 +44,7 @@
 
 | Dashboard | Scan + AI Insights |
 |----------|--------------------|
-| ![Dashboard](public/assets/dashboard-ui-preview.pn) | ![Insights](public/assets/scan-insights-preview.png) |
+| ![Dashboard](https://github.com/Prateek-glitch/terminal-titans/blob/main/cyber-1.png) | ![Insights](https://github.com/Prateek-glitch/terminal-titans/blob/main/cyber-2.png) |
 
 ---
 
