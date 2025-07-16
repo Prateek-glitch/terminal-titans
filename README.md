@@ -1,9 +1,7 @@
 <div align="center">
-  <img src="https://github.com/Prateek-glitch/terminal-titans/blob/main/cyberscan-bg.png" alt="CyberScan Logo" width="180" />
-  <h1 style="font-size: 4em; font-weight: bold; margin-bottom: 0;">CyberScan</h1>
-  <p style="font-size: 1.5em; margin-top: 0;">
-    <i>AI-Powered Vulnerability Scanner & Pentesting Dashboard</i>
-  </p>
+  <img src="https://github.com/Prateek-glitch/terminal-titans/blob/main/cyberscan-bg.png" alt="CyberScan Logo" width="150" />
+  <h1>CyberScan</h1>
+  <p><strong>AI-Powered Vulnerability Scanner & Pentesting Dashboard</strong></p>
 
   <p>
     <a href="https://github.com/Prateek-glitch/terminal-titans/stargazers"><img src="https://img.shields.io/github/stars/Prateek-glitch/terminal-titans?style=for-the-badge&logo=github&color=FFC107" alt="Stars"></a>
@@ -11,39 +9,37 @@
     <a href="https://github.com/Prateek-glitch/terminal-titans/issues"><img src="https://img.shields.io/github/issues/Prateek-glitch/terminal-titans?style=for-the-badge&logo=github&color=F44336" alt="Issues"></a>
     <a href="https://github.com/Prateek-glitch/terminal-titans/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Prateek-glitch/terminal-titans?style=for-the-badge&logo=github&color=2196F3" alt="License"></a>
   </p>
-  
-  <p>
-    <a href="https://twitter.com/intent/tweet?text=Check%20out%20CyberScan,%20an%20AI-powered%20vulnerability%20scanner!%20%F0%9F%94%91%0A%0Ahttps%3A//github.com/Prateek-glitch/terminal-titans"><img src="https://img.shields.io/twitter/url?label=Share%20on%20Twitter&style=social&url=https%3A%2F%2Fgithub.com%2FPrateek-glitch%2Fterminal-titans" alt="Twitter"></a>
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://github.com/Prateek-glitch/terminal-titans&title=Check%20out%20CyberScan,%20an%20AI-powered%20vulnerability%20scanner!&summary=A%20modern,%20full-stack%20tool%20for%20automated%20pentesting,%20LLM-powered%20analysis,%20and%20beautiful%20reporting.&source=LinkedIn"><img src="https://img.shields.io/badge/Share%20on-LinkedIn-0077B5?style=social&logo=linkedin" alt="LinkedIn"></a>
-  </p>
+
+  <p><i>A modern, full-stack tool for automated pentesting, LLM-powered analysis, and beautiful reporting.</i></p>
 </div>
 
 ---
 
-## ✨ Why Choose CyberScan?
+## 🚀 Why CyberScan?
 
-> **CyberScan** is your all-in-one command center for modern security testing. It unifies industry-standard scanning tools into a sleek, intuitive dashboard, empowering you to automate your workflow, harness the power of AI for actionable insights, and generate professional reports in seconds.
+**CyberScan** streamlines network reconnaissance and vulnerability scanning by integrating industry-standard tools into a single, intuitive dashboard. It empowers security teams and ethical hackers to automate their workflow, gain AI-driven insights, and generate professional reports with ease.
 
----
-
-## 🌟 Key Features
-
-| Feature                       | Description                                                                                             | Icon |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------- | :--: |
-| **AI-Powered Analysis** | Use **Google Gemini** to instantly analyze scan outputs, understand vulnerabilities, and get remediation advice. | 🤖 |
-| **Unified Scan Dashboard** | Run and manage scans from tools like **Nmap**, **Nikto**, and **WhatWeb** from a single, beautiful interface. | 🛠️ |
-| **Interactive UI** | A stunning glassmorphic interface built with **React** and **Tailwind CSS** for a superior user experience. | 🖥️ |
-| **Automated PDF Reporting** | Generate clean, professional PDF summaries of your findings for easy sharing and documentation.          | 📄 |
-| **Smart Tool Detection** | Automatically detects missing tools and provides AI-powered installation guidance.                       | 🔍 |
-| **Local & Cost-Free** | Run everything on your local machine with **zero paid dependencies** or subscriptions.                  | 🌐 |
+Our goal is to provide a powerful, open-source, and locally deployable solution with zero paid dependencies.
 
 ---
 
-## 🎬 Live Demo
+## ✨ Key Features
 
-*To make this section even more engaging, consider creating a GIF that showcases the CyberScan dashboard in action and replace the image below.*
+-   **🤖 AI-Powered Analysis:** Integrates **Google Gemini** to parse scan outputs, explain vulnerabilities, and suggest remediations.
+-   **🛠️ Custom Scan Orchestration:** Run scans using a suite of powerful tools like **Nmap**, **Nikto**, and **WhatWeb** right from the UI.
+-   **🖥️ Interactive Dashboard:** A sleek, glassmorphic interface built with **React** and **Tailwind CSS** for a modern user experience.
+-   **📄 Automated PDF Reports:** Generate clean, professional PDF summaries of your scan results for easy sharing.
+-   **🔍 Missing Tool Detection:** Automatically detects required tools and uses the LLM to provide installation instructions.
+-   **📂 File Upload & Analysis:** Upload and analyze existing scan reports or log files.
+-   **🌐 100% Local & Free:** Runs entirely on your local machine with no external dependencies or subscription fees.
 
-![CyberScan Demo GIF](https://github.com/Prateek-glitch/terminal-titans/blob/main/cyber-1.png)
+---
+
+## 📸 UI Previews
+
+| Dashboard View                                                                      | Scan Insights & AI Analysis                                                         |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| ![Dashboard](https://github.com/Prateek-glitch/terminal-titans/blob/main/cyber-1.png) | ![Insights](https://github.com/Prateek-glitch/terminal-titans/blob/main/cyber-2.png) |
 
 ---
 
@@ -60,21 +56,73 @@
 
 ---
 
-## 🚀 Get Started in 3 Steps
+## ⚙️ Getting Started
 
-### **Step 1: Prerequisites**
-- Make sure you have **Node.js** and **npm** installed.
-- Ensure all required scanning tools (e.g., Nmap, Nikto) are installed and accessible from your system's PATH.
+### Prerequisites
 
-### **Step 2: Installation**
-```bash
-# Clone the repository
-git clone [https://github.com/Prateek-glitch/terminal-titans.git](https://github.com/Prateek-glitch/terminal-titans.git)
-cd terminal-titans
+-   **Node.js & npm:** [Download Here](https://nodejs.org/)
+-   **Scanning Tools:** You must have the scanning tools (e.g., Nmap, Nikto) installed on your system PATH.
 
-# Install backend dependencies
-npm install
+### Installation
 
-# Install frontend dependencies
-cd frontend
-npm install
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/Prateek-glitch/terminal-titans.git](https://github.com/Prateek-glitch/terminal-titans.git)
+    cd terminal-titans
+    ```
+
+2.  **Install Dependencies:**
+    ```bash
+    # Install backend dependencies
+    npm install
+
+    # Navigate to the frontend directory and install its dependencies
+    cd frontend
+    npm install
+    ```
+
+3.  **Set Up Environment Variables:**
+    Create a `.env` file in the root directory and add your Google Gemini API key:
+    ```env
+    GEMINI_API_KEY=YOUR_API_KEY_HERE
+    ```
+
+---
+
+## 🚀 Usage
+
+1.  **Start the Backend Server:**
+    From the root directory:
+    ```bash
+    npm start
+    ```
+
+2.  **Start the Frontend Application:**
+    In a separate terminal, from the `frontend` directory:
+    ```bash
+    npm run dev
+    ```
+
+3.  **Open Your Browser:**
+    Navigate to `http://localhost:3000` to access the CyberScan dashboard.
+
+---
+
+## 🙌 Contributing
+
+Contributions are welcome! If you have ideas for new features, bug fixes, or improvements, please feel free to:
+
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/YourFeatureName`).
+3.  Make your changes.
+4.  Commit your changes (`git commit -m 'Add some amazing feature'`).
+5.  Push to the branch (`git push origin feature/YourFeatureName`).
+6.  Open a Pull Request.
+
+Please read our `CONTRIBUTING.md` for more details on our code of conduct and the process for submitting pull requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
