@@ -134,11 +134,11 @@ export default function ClientLayout() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-4">
+    <div className="min-h-screen flex flex-col w-full">
       <Toaster position="top-right" /> {/* Toast notifications */}
-      <div className="glassmorphic w-full max-w-6xl p-6 rounded-3xl shadow-lg flex flex-col">
+      <div className="glassmorphic w-full min-h-screen p-8 rounded-none shadow-lg flex flex-col">
         {/* Header */}
-        <header className="w-full flex justify-between items-center mb-8 px-4 py-2">
+        <header className="w-full flex justify-between items-center mb-6 px-6 py-4">
           <div className="flex items-center space-x-2">
             <StarIcon className="h-8 w-8 text-white" />
             <h1 className="text-2xl font-bold text-white">Pentest App</h1>
@@ -166,7 +166,7 @@ export default function ClientLayout() {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 w-full p-4">
+        <main className="flex-1 w-full px-6 pb-6">
           {activeTab === "dashboard" && (
             <DashboardPage
               scanOutput={scanOutput}
@@ -185,7 +185,7 @@ export default function ClientLayout() {
         </main>
 
         {/* Footer */}
-        <footer className="w-full text-center text-gray-500 text-sm mt-8 pt-4 border-t border-white/10">
+        <footer className="w-full text-center text-gray-500 text-sm mt-4 pt-4 px-6 border-t border-white/10">
           <p>Pentest App Team 2024</p>
         </footer>
       </div>

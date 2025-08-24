@@ -5,17 +5,17 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ScanOutputDisplay({ output, insights }) {
   return (
-    <div className="mt-6">
-      <h3 className="text-xl font-semibold mb-4 text-white">Scan Output & Vulnerabilities</h3>
-      <ScrollArea className="glassmorphic p-4 h-96 overflow-y-auto text-sm">
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold text-white">Scan Output & Vulnerabilities</h3>
+      <ScrollArea className="glassmorphic p-6 h-[500px] overflow-y-auto text-sm">
         {output ? (
           <div>
             <pre className="whitespace-pre-wrap break-words text-gray-200">{output}</pre>
             {insights && insights.vulnerabilities && insights.vulnerabilities.length > 0 && (
-              <div className="mt-4">
-                <h4 className="text-lg font-semibold mb-2 text-white">Vulnerability Insights:</h4>
+              <div className="mt-6">
+                <h4 className="text-lg font-semibold mb-4 text-white">Vulnerability Insights:</h4>
                 {insights.vulnerabilities.map((insight, index) => (
-                  <div key={index} className="mb-4 p-3 rounded-md bg-white/5 border border-white/10">
+                  <div key={index} className="mb-6 p-4 rounded-md bg-white/5 border border-white/10">
                     <div className="flex items-center mb-2">
                       <Badge
                         className={`mr-2 ${

@@ -33,9 +33,9 @@ export default function LLMInsightsDisplay({ insights }) {
 
   if (!displayData) {
     return (
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-4 text-white">LLM-Generated Vulnerability Insights</h3>
-        <div className="glassmorphic p-6 rounded-xl h-96 overflow-y-auto text-gray-400">
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold text-white">LLM-Generated Vulnerability Insights</h3>
+        <div className="glassmorphic p-8 rounded-xl h-[400px] overflow-y-auto text-gray-400 flex items-center justify-center">
           No LLM insights to display yet. Run a scan.
         </div>
       </div>
@@ -43,15 +43,15 @@ export default function LLMInsightsDisplay({ insights }) {
   }
 
   return (
-    <div className="mt-6">
-      <h3 className="text-xl font-semibold mb-4 text-white">LLM-Generated Vulnerability Insights</h3>
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold text-white">LLM-Generated Vulnerability Insights</h3>
       
       <div className="glassmorphic rounded-xl overflow-hidden">
         <ScrollArea className="h-[500px] p-6">
           {/* Summary Section */}
           <div className="mb-8">
-            <h4 className="font-medium text-white mb-3 text-lg">Overview</h4>
-            <p className="text-gray-300 whitespace-pre-line backdrop-blur-sm bg-white/5 rounded-lg p-4">
+            <h4 className="font-medium text-white mb-4 text-lg">Overview</h4>
+            <p className="text-gray-300 whitespace-pre-line backdrop-blur-sm bg-white/5 rounded-lg p-5">
               {displayData.summary}
             </p>
           </div>
@@ -59,8 +59,8 @@ export default function LLMInsightsDisplay({ insights }) {
           {/* Key Points */}
           {displayData.keyPoints?.length > 0 && (
             <div className="mb-8">
-              <h4 className="font-medium text-white mb-3 text-lg">Key Findings</h4>
-              <ul className="space-y-2">
+              <h4 className="font-medium text-white mb-4 text-lg">Key Findings</h4>
+              <ul className="space-y-3">
                 {displayData.keyPoints.map((point, i) => (
                   <li 
                     key={`point-${i}`}
