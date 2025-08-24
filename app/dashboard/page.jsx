@@ -130,31 +130,34 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
-      <GlassmorphicContainer className="col-span-1 max-h-[calc(100vh-5rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400/50 scrollbar-track-transparent">
-        <div className="flex flex-col gap-4">
+    <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-full">
+      <GlassmorphicContainer className="col-span-1 xl:col-span-1 max-h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400/50 scrollbar-track-transparent">
+        <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <Satellite className="h-8 w-8 text-blue-400" />
             <h2 className="text-2xl font-bold">Mission Control</h2>
           </div>
 
-          <Label htmlFor="target-url" className="text-lg">🎯 Target</Label>
-          <Input
-            id="target-url"
-            type="url"
-            placeholder="https://target-planet.com"
-            value={targetUrl}
-            onChange={(e) => setTargetUrl(e.target.value)}
-            className="space-input text-black"
-            disabled={loading}
-          />
+          <div className="space-y-4">
+            <Label htmlFor="target-url" className="text-lg">🎯 Target</Label>
+            <Input
+              id="target-url"
+              type="url"
+              placeholder="https://target-planet.com"
+              value={targetUrl}
+              onChange={(e) => setTargetUrl(e.target.value)}
+              className="space-input text-black"
+              disabled={loading}
+            />
+          </div>
 
-          <h3 className="text-lg font-semibold">🛡️ Select Scanning Arrays</h3>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">🛡️ Select Scanning Arrays</h3>
+            <div className="grid grid-cols-1 gap-3">
             {toolConfigs.map((tool) => {
               const IconComponent = tool.icon
               return (
-                <div key={tool.id} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
+                <div key={tool.id} className="flex items-center gap-3 p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
                   <input
                     type="checkbox"
                     id={tool.id}
@@ -173,56 +176,59 @@ export default function Dashboard() {
                 </div>
               )
             })}
+            </div>
           </div>
 
-          <Button
-            onClick={() => setShowAllTools((prev) => !prev)}
-            className="space-button w-full py-3"
-            variant="secondary"
-          >
-            <MoreHorizontal className="mr-2 h-5 w-5" />
-            {showAllTools ? "Show Less Tools" : "Show More Tools"}
-          </Button>
+          <div className="space-y-4">
+            <Button
+              onClick={() => setShowAllTools((prev) => !prev)}
+              className="space-button w-full py-3"
+              variant="secondary"
+            >
+              <MoreHorizontal className="mr-2 h-5 w-5" />
+              {showAllTools ? "Show Less Tools" : "Show More Tools"}
+            </Button>
 
-          <Button
-            onClick={handleRunSelectedScans}
-            disabled={loading || !targetUrl.trim() || selectedTools.length === 0}
-            className="space-button w-full py-4 text-lg"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                🚀 Launching Deep Scan...
-              </>
-            ) : (
-              <>
-                <Satellite className="mr-2 h-5 w-5" />
-                Launch Scanning
-              </>
-            )}
-          </Button>
+            <Button
+              onClick={handleRunSelectedScans}
+              disabled={loading || !targetUrl.trim() || selectedTools.length === 0}
+              className="space-button w-full py-4 text-lg"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  🚀 Launching Deep Scan...
+                </>
+              ) : (
+                <>
+                  <Satellite className="mr-2 h-5 w-5" />
+                  Launch Scanning
+                </>
+              )}
+            </Button>
+          </div>
 
-          <div className="pt-4 border-t border-white/10">
-            <h4 className="text-md font-medium mb-2">📡 Upload Data for analysis</h4>
+          <div className="pt-6 border-t border-white/10 space-y-3">
+            <h4 className="text-md font-medium">📡 Upload Data for analysis</h4>
             <FileUpload onScanStart={handleScanStart} onScanComplete={handleFileProcessed} />
           </div>
         </div>
       </GlassmorphicContainer>
 
-      <div className="col-span-1 lg:col-span-2 flex flex-col gap-8">
-        <GlassmorphicContainer>
+      <div className="col-span-1 xl:col-span-3 flex flex-col gap-6">
+        <GlassmorphicContainer className="flex-1">
           <ScanOutputDisplay output={scanOutput} insights={llmInsights} />
         </GlassmorphicContainer>
-        <GlassmorphicContainer>
+        <GlassmorphicContainer className="flex-1">
           <LLMInsightsDisplay insights={llmInsights} />
         </GlassmorphicContainer>
-        <GlassmorphicContainer className="text-center">
-          <div className="flex flex-col items-center gap-4">
+        <GlassmorphicContainer className="text-center py-8">
+          <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-3">
               <ArrowUpRight className="h-8 w-8 text-yellow-400" />
               <h3 className="text-xl font-semibold">Mission Report</h3>
             </div>
-            <p className="text-sm text-gray-400 max-w-md">
+            <p className="text-sm text-gray-400 max-w-lg">
               📋 Generate a comprehensive report with all scan results and vulnerability analysis.
             </p>
             <Button
