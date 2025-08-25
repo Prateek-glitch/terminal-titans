@@ -18,20 +18,164 @@ body {
     text-wrap: balance;
   }
   .glassmorphic {
-    background-color: rgba(255, 255, 255, 0.03); /* Very subtle white for background */
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle white for border */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 2rem; /* More rounded corners */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  }
-  .glassmorphic-light {
-    background-color: rgba(255, 255, 255, 0.08); /* Slightly lighter for contrast */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-radius: 2rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.37),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glassmorphic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.05),
+      transparent
+    );
+    transition: left 0.5s;
+    pointer-events: none;
+  }
+  
+  .glassmorphic:hover::before {
+    left: 100%;
+  }
+  
+  .glassmorphic:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 
+      0 12px 40px 0 rgba(0, 212, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .glassmorphic-light {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+  }
+  
+  .glassmorphic-light:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.02);
+  }
+  
+  .glassmorphic-vuln {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .glassmorphic-vuln:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+  .terminal-output {
+    background: rgba(0, 20, 0, 0.8);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    position: relative;
+  }
+  
+  .terminal-output::before {
+    content: '> ';
+    color: rgba(0, 255, 0, 0.7);
+  }
+  
+  .loading-dots {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 20px;
+  }
+  
+  .loading-dots div {
+    position: absolute;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--glow-blue);
+    animation: loading-dots 1.2s linear infinite;
+  }
+  
+  .loading-dots div:nth-child(1) { left: 8px; animation-delay: 0s; }
+  .loading-dots div:nth-child(2) { left: 32px; animation-delay: -0.4s; }
+  .loading-dots div:nth-child(3) { left: 56px; animation-delay: -0.8s; }
+  
+  @keyframes loading-dots {
+    0%, 80%, 100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1);
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes pulseGlow {
+    from {
+      box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+    }
+    to {
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    }
   }
 }
 
@@ -241,7 +385,7 @@ body::before {
   color: var(--text-secondary) !important;
 }
 
-/* Button styling */
+/* Enhanced Button styling */
 .space-button {
   background: linear-gradient(135deg, var(--accent-blue), var(--light-blue)) !important;
   border: none !important;
@@ -251,8 +395,10 @@ body::before {
   font-weight: 600 !important;
   font-size: 16px !important;
   cursor: pointer !important;
-  transition: all 0.3s ease !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3) !important;
   overflow: hidden !important;
 }
 
@@ -278,15 +424,23 @@ body::before {
 
 .space-button:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4) !important;
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5) !important;
+  background: linear-gradient(135deg, var(--light-blue), var(--accent-blue)) !important;
+}
+
+.space-button:active {
+  transform: translateY(0px) !important;
 }
 
 .space-button:disabled {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: var(--text-secondary) !important;
+  opacity: 0.6 !important;
   cursor: not-allowed !important;
   transform: none !important;
-  box-shadow: none !important;
+}
+
+.space-button:disabled:hover {
+  transform: none !important;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3) !important;
 }
 
 /* Checkbox styling */
