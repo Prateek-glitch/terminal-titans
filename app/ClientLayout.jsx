@@ -2,8 +2,11 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import ThemeToggle from "@/components/ui/theme-toggle"
 import { Toaster, toast } from "react-hot-toast" // For notifications
-import { StarIcon } from "lucide-react" // For logo and button icon
+import { StarIcon, User, ChevronRight } from "lucide-react" // For logo and button icon
 
 // Import the page components directly
 import DashboardPage from "./dashboard/page"
@@ -138,31 +141,86 @@ export default function ClientLayout() {
       <Toaster position="top-right" /> {/* Toast notifications */}
       <div className="glassmorphic w-full max-w-6xl p-6 rounded-3xl shadow-lg flex flex-col">
         {/* Header */}
-        <header className="w-full flex justify-between items-center mb-8 px-4 py-2">
-          <div className="flex items-center space-x-2">
-            <StarIcon className="h-8 w-8 text-white" />
-            <h1 className="text-2xl font-bold text-white">Pentest App</h1>
+        <header className="w-full flex justify-between items-center mb-8 px-4 py-4 glassmorphic-light rounded-2xl">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/30">
+                <StarIcon className="h-8 w-8 text-blue-400" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-white">Terminal Titans</h1>
+                <p className="text-sm text-gray-400">Advanced Penetration Testing Platform</p>
+              </div>
+            </div>
+            
+            {/* Breadcrumbs */}
+            <div className="hidden md:flex items-center gap-2 ml-8 text-sm">
+              <span className="text-gray-400">Home</span>
+              <ChevronRight className="h-4 w-4 text-gray-400" />
+              <span className="text-white capitalize">{activeTab}</span>
+              {activeTab === 'dashboard' && currentScanId && (
+                <>
+                  <ChevronRight className="h-4 w-4 text-gray-400" />
+                  <Badge variant="outline" className="text-green-400 border-green-400/50">
+                    Scan Active
+                  </Badge>
+                </>
+              )}
+            </div>
           </div>
-          <nav className="flex space-x-4">
-            <Button
-              onClick={() => setActiveTab("dashboard")}
-              variant="ghost"
-              className={`px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200 ${
-                activeTab === "dashboard" ? "text-white bg-white/10" : "text-gray-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              Dashboard
-            </Button>
-            <Button
-              onClick={() => setActiveTab("history")}
-              variant="ghost"
-              className={`px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200 ${
-                activeTab === "history" ? "text-white bg-white/10" : "text-gray-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              History
-            </Button>
-          </nav>
+          
+          <div className="flex items-center space-x-4">
+            {/* User Profile Section */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-3 glassmorphic-light px-3 py-2 rounded-xl cursor-pointer hover:bg-white/10 transition-all">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                      <User className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="hidden sm:block">
+                      <div className="text-sm font-medium text-white">Security Analyst</div>
+                      <div className="text-xs text-gray-400">Administrator</div>
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>User Profile & Settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <ThemeToggle />
+            
+            {/* Navigation */}
+            <nav className="flex space-x-2">
+              <Button
+                onClick={() => setActiveTab("dashboard")}
+                variant="ghost"
+                className={`px-4 py-2 rounded-xl text-lg font-semibold transition-all duration-300 ${
+                  activeTab === "dashboard" 
+                    ? "text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30" 
+                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Dashboard
+                {activeTab === "dashboard" && loading && (
+                  <div className="ml-2 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                )}
+              </Button>
+              <Button
+                onClick={() => setActiveTab("history")}
+                variant="ghost"
+                className={`px-4 py-2 rounded-xl text-lg font-semibold transition-all duration-300 ${
+                  activeTab === "history" 
+                    ? "text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30" 
+                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                History
+              </Button>
+            </nav>
+          </div>
         </header>
 
         {/* Main Content Area */}

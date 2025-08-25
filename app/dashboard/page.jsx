@@ -7,7 +7,9 @@ import FileUpload from "@/components/FileUpload"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
 import { toast } from "react-hot-toast"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import {
   Loader2, ArrowUpRight, Satellite, Shield, Search, Activity, Zap,
   Globe2, ServerCrash, Bug, Radar, Globe, TerminalSquare, Layers, MoreHorizontal
@@ -133,43 +135,130 @@ export default function Dashboard() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
       <GlassmorphicContainer className="col-span-1 max-h-[calc(100vh-5rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400/50 scrollbar-track-transparent">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <Satellite className="h-8 w-8 text-blue-400" />
-            <h2 className="text-2xl font-bold">Mission Control</h2>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/30">
+                <Satellite className="h-8 w-8 text-blue-400" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Mission Control</h2>
+                <p className="text-sm text-gray-400">Space-Based Security Operations</p>
+              </div>
+            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="outline" className="text-green-400 border-green-400/50 bg-green-400/10">
+                    ● Online
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>All systems operational</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
-          <Label htmlFor="target-url" className="text-lg">🎯 Target</Label>
-          <Input
-            id="target-url"
-            type="url"
-            placeholder="https://target-planet.com"
-            value={targetUrl}
-            onChange={(e) => setTargetUrl(e.target.value)}
-            className="space-input text-black"
-            disabled={loading}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="target-url" className="text-lg flex items-center gap-2">
+              🎯 Target Coordinates
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="w-4 h-4 rounded-full bg-blue-400/20 flex items-center justify-center cursor-help">
+                      <span className="text-xs text-blue-400">?</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Enter the target URL or IP address for scanning</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </Label>
+            <div className="relative">
+              <Input
+                id="target-url"
+                type="url"
+                placeholder="https://target-planet.com or 192.168.1.1"
+                value={targetUrl}
+                onChange={(e) => setTargetUrl(e.target.value)}
+                className="space-input text-white pr-10"
+                disabled={loading}
+              />
+              {targetUrl && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                </div>
+              )}
+            </div>
+          </div>
 
-          <h3 className="text-lg font-semibold">🛡️ Select Scanning Arrays</h3>
-          <div className="grid grid-cols-1 gap-4">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            🛡️ Select Scanning Arrays
+            <Badge variant="outline" className="text-xs">
+              {selectedTools.length} Selected
+            </Badge>
+          </h3>
+          <div className="grid grid-cols-1 gap-3">
             {toolConfigs.map((tool) => {
               const IconComponent = tool.icon
+              const isSelected = selectedTools.includes(tool.id)
               return (
-                <div key={tool.id} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
-                  <input
-                    type="checkbox"
-                    id={tool.id}
-                    checked={selectedTools.includes(tool.id)}
-                    onChange={() => handleToolChange(tool.id)}
-                    disabled={loading}
-                    className="space-checkbox"
-                  />
-                  <IconComponent className="h-5 w-5 text-blue-400" />
-                  <div className="flex-1">
-                    <Label htmlFor={tool.id} className="space-label block">
-                      {tool.name}
-                    </Label>
-                    <p className="text-sm text-gray-400">{tool.description}</p>
+                <div 
+                  key={tool.id} 
+                  className={`group relative p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                    isSelected 
+                      ? 'bg-blue-500/10 border-blue-400/50 shadow-lg shadow-blue-500/20' 
+                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                  }`}
+                  onClick={() => handleToolChange(tool.id)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        id={tool.id}
+                        checked={isSelected}
+                        onChange={() => {}} // Handled by parent div click
+                        disabled={loading}
+                        className="space-checkbox"
+                      />
+                      {isSelected && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                      )}
+                    </div>
+                    <div className={`p-2 rounded-lg transition-colors ${
+                      isSelected ? 'bg-blue-400/20' : 'bg-white/10'
+                    }`}>
+                      <IconComponent className={`h-5 w-5 transition-colors ${
+                        isSelected ? 'text-blue-400' : 'text-gray-400 group-hover:text-blue-400'
+                      }`} />
+                    </div>
+                    <div className="flex-1">
+                      <Label 
+                        htmlFor={tool.id} 
+                        className={`space-label block cursor-pointer transition-colors ${
+                          isSelected ? 'text-blue-300' : 'text-white group-hover:text-blue-300'
+                        }`}
+                      >
+                        {tool.name}
+                      </Label>
+                      <p className="text-sm text-gray-400 mt-1">{tool.description}</p>
+                      {isSelected && (
+                        <div className="flex items-center gap-1 mt-2 text-xs text-blue-400">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                          <span>Ready for deployment</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
+                  
+                  {/* Hover effect overlay */}
+                  <div className={`absolute inset-0 rounded-xl transition-opacity pointer-events-none ${
+                    isSelected 
+                      ? 'bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-100' 
+                      : 'bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100'
+                  }`}></div>
                 </div>
               )
             })}
@@ -187,17 +276,26 @@ export default function Dashboard() {
           <Button
             onClick={handleRunSelectedScans}
             disabled={loading || !targetUrl.trim() || selectedTools.length === 0}
-            className="space-button w-full py-4 text-lg"
+            className="space-button w-full py-4 text-lg relative overflow-hidden"
           >
             {loading ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              <div className="flex items-center justify-center">
+                <div className="loading-dots mr-3">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
                 🚀 Launching Deep Scan...
-              </>
+              </div>
             ) : (
               <>
                 <Satellite className="mr-2 h-5 w-5" />
-                Launch Scanning
+                Launch Scanning Mission
+                {selectedTools.length > 0 && (
+                  <Badge className="ml-2 bg-white/20 text-white border-white/30">
+                    {selectedTools.length} tools
+                  </Badge>
+                )}
               </>
             )}
           </Button>
